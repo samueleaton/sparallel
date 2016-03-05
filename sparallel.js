@@ -84,7 +84,9 @@ function sparallel() {
 	}
 
 	var s = new (Function.prototype.bind.apply(Sparallel, [null].concat(args)))();
-	return s;
+	return { then: function then(cb) {
+			return s.then(cb);
+		} };
 }
 
 module.exports = sparallel;

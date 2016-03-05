@@ -45,7 +45,7 @@ function sparallel(...args) {
 		}
 	}
 	const s = new Sparallel(...args);
-	return s;
+	return {then: cb => s.then(cb)};
 }
 
 module.exports = sparallel;
