@@ -1,0 +1,30 @@
+{
+  "name": "sparallel",
+  "version": "0.0.1",
+  "description": "Super parallel function runner.",
+  "main": "sparallel.js",
+  "scripts": {
+    "transpile": "babel src -d ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samueleaton/sparallel.git"
+  },
+  "keywords": ["function", "parallel", "async", "asynchronous"],
+  "author": "Sam Eaton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samueleaton/sparallel/issues"
+  },
+  "homepage": "https://github.com/samueleaton/sparallel#readme",
+  "dependencies": {
+    "lodash.assign": "^4.0.6",
+    "lodash.foreach": "^4.1.0",
+    "lodash.isfunction": "^3.0.8",
+    "lodash.isobject": "^3.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-preset-es2015": "^6.6.0"
+  }
+}
