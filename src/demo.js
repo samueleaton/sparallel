@@ -29,7 +29,7 @@ sparallel(
 	console.log('s1 done: ', res);
 });
 
-sparallel(
+sparallel([
 	done => {
 		setTimeout(function() {
 			console.log('S2: check 1');
@@ -48,6 +48,6 @@ sparallel(
 			done({s2Check3: 's2 333'});
 		}, 400);
 	}
-).then(res => {
+]).then(res => {
 	console.log('s2 done: ', res);
 });

@@ -18,7 +18,17 @@ var _lodash7 = require('lodash.isfunction');
 
 var _lodash8 = _interopRequireDefault(_lodash7);
 
+var _lodash9 = require('lodash.isarray');
+
+var _lodash10 = _interopRequireDefault(_lodash9);
+
+var _lodash11 = require('lodash.flatten');
+
+var _lodash12 = _interopRequireDefault(_lodash11);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -83,7 +93,7 @@ function sparallel() {
 		args[_key] = arguments[_key];
 	}
 
-	var s = new (Function.prototype.bind.apply(Sparallel, [null].concat(args)))();
+	var s = new (Function.prototype.bind.apply(Sparallel, [null].concat(_toConsumableArray((0, _lodash12.default)(args)))))();
 	return { then: function then(cb) {
 			return s.then(cb);
 		} };

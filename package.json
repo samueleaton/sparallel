@@ -10,7 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/samueleaton/sparallel.git"
   },
-  "keywords": ["function", "parallel", "async", "asynchronous"],
+  "keywords": [
+    "function",
+    "parallel",
+    "async",
+    "asynchronous"
+  ],
   "author": "Sam Eaton",
   "license": "MIT",
   "bugs": {
@@ -19,7 +24,9 @@
   "homepage": "https://github.com/samueleaton/sparallel#readme",
   "dependencies": {
     "lodash.assign": "^4.0.6",
+    "lodash.flatten": "^4.1.0",
     "lodash.foreach": "^4.1.0",
+    "lodash.isarray": "^4.0.0",
     "lodash.isfunction": "^3.0.8",
     "lodash.isobject": "^3.0.2"
   },

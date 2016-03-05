@@ -2,6 +2,8 @@ import each from 'lodash.foreach';
 import isObject from 'lodash.isobject';
 import assign from 'lodash.assign';
 import isFunction from 'lodash.isfunction';
+import isArray from 'lodash.isarray';
+import flatten from 'lodash.flatten';
 
 function sparallel(...args) {
 	class Sparallel {
@@ -44,7 +46,8 @@ function sparallel(...args) {
 			this.run();
 		}
 	}
-	const s = new Sparallel(...args);
+
+	const s = new Sparallel(...flatten(args));
 	return {then: cb => s.then(cb)};
 }
 

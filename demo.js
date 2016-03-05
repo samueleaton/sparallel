@@ -30,7 +30,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 	console.log('s1 done: ', res);
 });
 
-(0, _sparallel2.default)(function (done) {
+(0, _sparallel2.default)([function (done) {
 	setTimeout(function () {
 		console.log('S2: check 1');
 		done({ s2Check1: 's2 1' });
@@ -45,6 +45,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 		console.log('S2: check 3');
 		done({ s2Check3: 's2 333' });
 	}, 400);
-}).then(function (res) {
+}]).then(function (res) {
 	console.log('s2 done: ', res);
 });
