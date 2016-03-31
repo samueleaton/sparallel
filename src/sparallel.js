@@ -19,8 +19,16 @@ function sparallel(...args) {
 			if (isObject(obj))
 				this.doneObj = assign(this.doneObj, obj);
 
-			if (this.counter === this.total)
-				this.thenCb(this.doneObj);
+			if (this.counter === this.total) {
+				if (typeof process === 'object' && process.setImmediate) {
+					process.setImmediate(() => this.thenCb(this.doneObj));
+				}
+				else {
+					setTimeout(() => this.thenCb(this.doneObj), 0);
+				}
+			}
+
+			return obj;
 		}
 		run() {
 			each(this.functions, func => {
@@ -31,9 +39,10 @@ function sparallel(...args) {
 						const done = obj => {
 							if (doneCalledAlready) return;
 							doneCalledAlready = true;
-							this.functionDone(obj);
+							return this.functionDone(obj);
 						}
 
+						// this is what's passed to each function
 						return obj => done(obj);
 					})()
 				)
