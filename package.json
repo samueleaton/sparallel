@@ -1,6 +1,6 @@
 {
   "name": "sparallel",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Super parallel function runner.",
   "main": "sparallel.js",
   "scripts": {
