@@ -1,7 +1,5 @@
 'use strict';
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _lodash = require('lodash.foreach');
@@ -59,8 +57,8 @@ function sparallel() {
 				if ((0, _lodash4.default)(obj)) this.doneObj = (0, _lodash6.default)(this.doneObj, obj);
 
 				if (this.counter === this.total) {
-					if ((typeof process === 'undefined' ? 'undefined' : _typeof(process)) === 'object' && process.setImmediate) {
-						process.setImmediate(function () {
+					if (typeof setImmediate === 'function') {
+						setImmediate(function () {
 							return _this.thenCb(_this.doneObj);
 						});
 					} else {

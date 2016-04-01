@@ -20,8 +20,8 @@ function sparallel(...args) {
 				this.doneObj = assign(this.doneObj, obj);
 
 			if (this.counter === this.total) {
-				if (typeof process === 'object' && process.setImmediate) {
-					process.setImmediate(() => this.thenCb(this.doneObj));
+				if (typeof setImmediate === 'function') {
+					setImmediate(() => this.thenCb(this.doneObj));
 				}
 				else {
 					setTimeout(() => this.thenCb(this.doneObj), 0);
