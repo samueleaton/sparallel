@@ -13,14 +13,20 @@ sparallel(
 			done({dog: 'doggy', cool: true});
 		}, 1100);
 	},
-	done => {
+	(done, onError) => {
 		setTimeout(function() {
 			console.log('S1: check 3');
+
+			// catchErr(new Error('this is a test error'));
 			done({mouse: 'mouserz', rat: 11, cat: 1111111111});
 		}, 5);
 	}
-).then(res => {
-	console.log('s1 done: ', res);
+)
+.then(res => {
+	console.log('ALL done: ', res);
+})
+.catch(err => {
+	console.log('caught: ', err);
 });
 
 // sparallel([

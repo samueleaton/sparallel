@@ -16,13 +16,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 		console.log('S1: check 2');
 		done({ dog: 'doggy', cool: true });
 	}, 1100);
-}, function (done) {
+}, function (done, onError) {
 	setTimeout(function () {
 		console.log('S1: check 3');
+
+		// catchErr(new Error('this is a test error'));
 		done({ mouse: 'mouserz', rat: 11, cat: 1111111111 });
 	}, 5);
 }).then(function (res) {
-	console.log('s1 done: ', res);
+	console.log('ALL done: ', res);
+}).catch(function (err) {
+	console.log('caught: ', err);
 });
 
 // sparallel([

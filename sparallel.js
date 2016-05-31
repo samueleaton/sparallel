@@ -33,6 +33,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function sparallel() {
+	for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+		args[_key] = arguments[_key];
+	}
+
 	var Sparallel = function () {
 		function Sparallel() {
 			_classCallCheck(this, Sparallel);
@@ -59,11 +63,11 @@ function sparallel() {
 				if (this.counter === this.total) {
 					if (typeof setImmediate === 'function') {
 						setImmediate(function () {
-							return _this.thenCb(_this.doneObj);
+							return _this.runCb(_this.doneObj);
 						});
 					} else {
 						setTimeout(function () {
-							return _this.thenCb(_this.doneObj);
+							return _this.runCb(_this.doneObj);
 						}, 0);
 					}
 				}
@@ -72,9 +76,10 @@ function sparallel() {
 			}
 		}, {
 			key: 'run',
-			value: function run() {
+			value: function run(runCb, runCatch) {
 				var _this2 = this;
 
+				this.runCb = runCb;
 				(0, _lodash2.default)(this.functions, function (func) {
 					func(function () {
 						var doneCalledAlready = false;
@@ -89,29 +94,19 @@ function sparallel() {
 						return function (obj) {
 							return done(obj);
 						};
-					}());
+					}(), runCatch);
 				});
-			}
-		}, {
-			key: 'then',
-			value: function then(cb) {
-				if (!(0, _lodash8.default)(cb)) return console.error('Error: passed non-function to "then"');
-				this.thenCb = cb;
-				this.run();
 			}
 		}]);
 
 		return Sparallel;
 	}();
 
-	for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-		args[_key] = arguments[_key];
-	}
-
-	var s = new (Function.prototype.bind.apply(Sparallel, [null].concat(_toConsumableArray((0, _lodash12.default)(args)))))();
-	return { then: function then(cb) {
-			return s.then(cb);
-		} };
+	return new Promise(function (resolve, reject) {
+		setImmediate(function () {
+			return new (Function.prototype.bind.apply(Sparallel, [null].concat(_toConsumableArray((0, _lodash12.default)(args)))))().run(resolve, reject);
+		});
+	});
 }
 
 module.exports = sparallel;

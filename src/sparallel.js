@@ -21,16 +21,17 @@ function sparallel(...args) {
 
 			if (this.counter === this.total) {
 				if (typeof setImmediate === 'function') {
-					setImmediate(() => this.thenCb(this.doneObj));
+					setImmediate(() => this.runCb(this.doneObj));
 				}
 				else {
-					setTimeout(() => this.thenCb(this.doneObj), 0);
+					setTimeout(() => this.runCb(this.doneObj), 0);
 				}
 			}
 
 			return obj;
 		}
-		run() {
+		run(runCb, runCatch) {
+			this.runCb = runCb;
 			each(this.functions, func => {
 				func(
 					(() => {
@@ -44,20 +45,16 @@ function sparallel(...args) {
 
 						// this is what's passed to each function
 						return obj => done(obj);
-					})()
+					})(),
+					runCatch
 				)
 			});
 		}
-		then(cb) {
-			if (!isFunction(cb))
-				return console.error('Error: passed non-function to "then"');
-			this.thenCb = cb;
-			this.run();
-		}
 	}
 
-	const s = new Sparallel(...flatten(args));
-	return {then: cb => s.then(cb)};
+	return new Promise((resolve, reject) => {
+		setImmediate(() => new Sparallel(...flatten(args)).run(resolve, reject));
+	});
 }
 
 module.exports = sparallel;
