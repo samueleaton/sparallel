@@ -1,9 +1,49 @@
-import each from 'lodash.foreach';
-import isObject from 'lodash.isobject';
-import assign from 'lodash.assign';
-import isFunction from 'lodash.isfunction';
-import isArray from 'lodash.isarray';
-import flatten from 'lodash.flatten';
+function isArray(obj) {
+  if (!obj)
+    return false;
+  return (
+    typeof obj === 'object' &&
+    (
+      (Array.isArray && Array.isArray(obj)) ||
+      obj.constructor === Array ||
+      obj instanceof Array
+    )
+  );
+}
+
+function forOwn(arg, func) {
+  for (const key in arg) {
+    if (arg.hasOwnProperty(key)) {
+      if (typeof func === 'function')
+        func(arg[key], key);
+    }
+  }
+}
+
+function isObject(value) {
+  const type = typeof value;
+  return !!value && (type === 'object' || type === 'function');
+}
+
+function forEach(list, func) {
+  if (!list || !list.length)
+    return null;
+  if (typeof func !== 'function')
+    return console.error('2nd param to forEach must be function');
+  for (let i = 0, ii = list.length; i < ii; i++)
+    func(list[i], i);
+}
+
+function flatten(arr) {
+  const result = [];
+  forEach(arr, elm => {
+    if (isArray(elm))
+      forEach(elm, elm2 => result.push(elm2));
+    else
+      result.push(elm);
+  });
+  return result;
+}
 
 function sparallel(...args) {
 	class Sparallel {
@@ -16,8 +56,11 @@ function sparallel(...args) {
 		functionDone(obj) {
 			this.counter++;
 
-			if (isObject(obj))
-				this.doneObj = assign(this.doneObj, obj);
+			if (isObject(obj)) {
+				forOwn(obj, (val, key) => {
+					this.doneObj[key] = val;
+				});
+			}
 
 			if (this.counter === this.total) {
 				if (typeof setImmediate === 'function') {
@@ -32,7 +75,7 @@ function sparallel(...args) {
 		}
 		run(runCb, runCatch) {
 			this.runCb = runCb;
-			each(this.functions, func => {
+			forEach(this.functions, func => {
 				func(
 					(() => {
 						let doneCalledAlready = false;
