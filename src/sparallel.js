@@ -96,7 +96,12 @@ function sparallel(...args) {
 	}
 
 	return new Promise((resolve, reject) => {
-		setImmediate(() => new Sparallel(...flatten(args)).run(resolve, reject));
+    if (typeof setImmediate === 'function') {
+  		setImmediate(() => new Sparallel(...flatten(args)).run(resolve, reject));
+    }
+    else {
+      setTimeout(() => new Sparallel(...flatten(args)).run(resolve, reject), 0);
+    }
 	});
 }
 
