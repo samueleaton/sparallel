@@ -2,12 +2,12 @@
 
 Super parallel function runner.
 
-Simply pass functions to `sparallel` and call the `done` callback when each finishes. Sparallel returns a promise so the `then` method takes a callback that will run after all other functions have called the `done` callback. 
+Simply pass functions to `sparallel` and call the `done` (or `resolve`) callback when each finishes. Sparallel returns a promise so the `then` method takes a callback that will run after all other functions have called the `done` callback.
 
 Sounds confusing, so here's an example:
 
 ``` javascript
-import sparallel from './sparallel';
+import sparallel from 'sparallel';
 
 sparallel(
     done => {
@@ -57,31 +57,31 @@ sparallel(
 
 ### Error Handling
 
-The second paramter to each function is an optional error handler.
+The second parameter to each function is an optional error handler.
 
 Example
 
 ``` javascript
 sparallel(
-    (done) => {
+    resolve => {
         setTimeout(function() {
-            done({name: 'sam'});
+            resolve({name: 'sam'});
         }, 1000);
     },
-    (done, error) => {
+    (resolve, error) => {
         setTimeout(function() {
             error('i failed :(');
         }, 1100);
     },
-    (done) => {
+    resolve => {
         setTimeout(function() {
-            done({fat: 'probably not'});
+            resolve({fat: 'probably not'});
         }, 5);
     }
 )
-// will not run
+// will NOT run
 .then(resObj => {
-    console.log(resObj); // {name: 'sam', color: 'blue', fat: 'probably not'}
+    console.log(resObj); // {name: 'sam', fat: 'probably not'}
 })
 // will run
 .catch(error => {
