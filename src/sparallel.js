@@ -2,7 +2,7 @@ function isArray(obj) {
   if (!obj)
     return false;
   return (
-    typeof obj === 'object' &&
+    typeof obj === "object" &&
     (
       (Array.isArray && Array.isArray(obj)) ||
       obj.constructor === Array ||
@@ -14,7 +14,7 @@ function isArray(obj) {
 function forOwn(arg, func) {
   for (const key in arg) {
     if (arg.hasOwnProperty(key)) {
-      if (typeof func === 'function')
+      if (typeof func === "function")
         func(arg[key], key);
     }
   }
@@ -22,14 +22,14 @@ function forOwn(arg, func) {
 
 function isObject(value) {
   const type = typeof value;
-  return !!value && (type === 'object' || type === 'function');
+  return !!value && (type === "object" || type === "function");
 }
 
 function forEach(list, func) {
   if (!list || !list.length)
     return null;
-  if (typeof func !== 'function')
-    return console.error('2nd param to forEach must be function');
+  if (typeof func !== "function")
+    return console.error("2nd param to forEach must be function");
   for (let i = 0, ii = list.length; i < ii; i++)
     func(list[i], i);
 }
@@ -63,7 +63,7 @@ function sparallel(...args) {
 			}
 
 			if (this.counter === this.total) {
-				if (typeof setImmediate === 'function') {
+				if (typeof setImmediate === "function") {
 					setImmediate(() => this.runCb(this.doneObj));
 				}
 				else {
@@ -96,12 +96,7 @@ function sparallel(...args) {
 	}
 
 	return new Promise((resolve, reject) => {
-    if (typeof setImmediate === 'function') {
-  		setImmediate(() => new Sparallel(...flatten(args)).run(resolve, reject));
-    }
-    else {
-      setTimeout(() => new Sparallel(...flatten(args)).run(resolve, reject), 0);
-    }
+    new Sparallel(...flatten(args)).run(resolve, reject)
 	});
 }
 
